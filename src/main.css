@@ -8,6 +8,7 @@
 :root {
   --animation-duration: .5s;
   --color-primary: rgb(25, 180, 173);
+  --color-secondary: orangered;
   --color-background: #282c32;
 }
 
@@ -19,22 +20,28 @@ html {
   box-sizing: border-box;
 }
 
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
 body {
   font-family: 'Source Sans Pro', 'Trebuchet MS', 'Lucida Grande', 'Bitstream Vera Sans', 'Helvetica Neue', sans-serif;
   margin: 0;
   padding: 0;
+  width: 100%;
   text-align: center;
 }
 
 .app {
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  min-height: 100vh;
   background-color: var(--color-background);
   color: var(--color-primary);
   display: flex;
   flex-flow: column;
   justify-content: flex-start;
   align-items: center;
+  padding: 0 10px;
 }
 
 .title {
@@ -43,7 +50,7 @@ body {
 }
 
 .nav {
-  margin-bottom: auto;
+  /* margin-bottom: auto; */
 }
 
 .center {
@@ -66,7 +73,7 @@ form::before {
   width: 18px;
   height: 2px;
   content: "";
-  background-color: orangered;
+  background-color: var(--color-secondary);
   position: absolute;
   top: 90%;
   left: 32px;
@@ -85,7 +92,7 @@ form.active::before {
 }
 
 input {
-  border: 5px solid orangered;
+  border: 5px solid var(--color-secondary);
   background: transparent;
   color: white;
   font-weight: bold;
@@ -97,8 +104,8 @@ input {
 
 input:not(:active), input:not(:focus) {
   border-radius: 100%;
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   transition: all var(--animation-duration) ease-out;
   caret-color: transparent;
 }
@@ -107,7 +114,151 @@ input:not(:active), input:not(:focus) {
 input:active, input:focus {
   width: 300px;
   border-radius: 5px;
-  padding: 5px 20px;
+  padding: 20px;
   transition: all var(--animation-duration) ease-out var(--animation-duration);
   caret-color: var(--color-primary);
+}
+
+.random {
+  text-transform: capitalize;
+  text-decoration: none;
+  color: var(--color-secondary);
+  animation: osc 2s linear infinite;
+  /* transition: all 0.2s; */
+  display: inline-block;
+}
+
+@keyframes osc {
+  35% {
+    transform: rotateZ(20deg);
+  }
+  40% {
+    transform: rotateZ(-20deg);
+  }
+  45% {
+    transform: rotateZ(20deg);
+  }
+  50% {
+    transform: rotateZ(20deg);
+  }
+  55% {
+    transform: rotateZ(-20deg);
+  }
+  60% {
+    transform: rotateZ(20deg);
+  }
+  65% {
+    transform: rotateZ(-20deg);
+  }
+}
+
+.results {
+  width: 90%;
+  display: flex;
+  justify-content: center;
+}
+
+.loading-icon-parent {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  display: block;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+}
+
+.loading-icon {
+  background-color: transparent;
+  border: 5px solid var(--color-background);
+  border-bottom: 5px solid var(--color-primary);
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  position: relative;
+  animation: rotate 1s linear infinite;
+  margin-top: 20px;
+}
+
+.loading-icon::before {
+  content: "";
+  display: block;
+  background-color: transparent;
+  border: 5px solid var(--color-background);
+  border-bottom: 5px solid var(--color-secondary);
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  animation: rotate 1.5s linear infinite;
+  transition: all 1s;
+}
+
+.loading-icon::after {
+  content: " ";
+  display: block;
+  background-color: transparent;
+  border: 5px solid var(--color-background);
+  border-bottom: 5px solid var(--color-primary);
+  width: 50px;
+  height: 50px;
+  position: absolute;
+  top: 19px;
+  left: 19px;
+  border-radius: 50%;
+  animation: rotate 2s linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotateZ(0);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.result-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+.result {
+  display: block;
+  color: white;
+  padding: 10px 20px;
+  border: 7px solid var(--color-primary);
+  border-radius: 5px;
+  text-decoration: none;
+  margin-bottom: 10px;
+  max-width: 80%;
+}
+
+.result-title {
+  color: var(--color-secondary);
+}
+
+@keyframes slide-in {
+  0% {
+    opacity: 0;
+    margin-left: -200px;
+  }
+
+  100% {
+    opacity: 1;
+    margin-left: 0;
+  }
+}
+
+.result-enter-active {
+  animation: slide-in 1s forwards;
+}
+
+.result-leave-active {
+  /* animation: slide-out 1s reverse; */
+  opacity: 0;
 }
